@@ -1,0 +1,14 @@
+/.idea/
+**/tests/
+*.cpp
+*.java
+*.log
+
+/venv/
+
+*.yaml
+*.png
+*.md
+tests.py
+
+
