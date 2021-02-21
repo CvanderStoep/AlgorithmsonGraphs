@@ -2,9 +2,12 @@ import sys
 
 
 def reach(adj, x, y):
+    """checks whether two vertices in an undirected graph are connected"""
     number_vertices = len(adj)
+    # start by setting all the vertices as unvisited
     visited = [False] * number_vertices
 
+    # explore all vertices recursively, starting with x
     def explore(vertex):
         visited[vertex] = True
         for neighbour in adj[vertex]:
@@ -12,13 +15,15 @@ def reach(adj, x, y):
                 explore(neighbour)
 
     explore(vertex=x)
-    # print(visited)
+    # if y is part of the visited vertices, then they are connected
     return visited[y]
 
 
 def main():
     input_data = sys.stdin.readline().strip()
-
+    # reads in the data as a single string separated with spaces
+    # number vertices, number of edges, edge_1, edge_2, ... edge_n, start vertex, end vertex
+    # outputs connected: yes/no
     data = list(map(int, input_data.split()))
     n, m = data[0:2]
     data = data[2:]

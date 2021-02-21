@@ -1,33 +1,53 @@
-# Uses python3
-
 import sys
 
+global clock
+clock = 1
 
-def number_of_components(adj):
-    """returns the number of connected components in a undirected graph"""
-    result = 0  # this is the number of connected components (CC)
+
+def acyclic2(adj):
+    """checks whether two vertices in a graph are connected"""
+
     number_vertices = len(adj)
     visited = [False] * number_vertices
+    pre = [0] * number_vertices
+    post = [0] * number_vertices
+
+    def previsit(v):
+        global clock
+        pre[v] = clock
+        clock += 1
+
+    def postvisit(v):
+        global clock
+        post[v] = clock
+        clock += 1
 
     def explore(vertex):
+        previsit(vertex)
         visited[vertex] = True
         for neighbour in adj[vertex]:
             if not visited[neighbour]:
                 explore(neighbour)
+        postvisit(vertex)
 
     for vertex in range(number_vertices):
-        # keep exploring connected vertices until it stops, then add +1 to the CC
+        # keep exploring connected vertices until it stops
         if not visited[vertex]:
             explore(vertex=vertex)
-            result += 1
-    return result
+
+    # for a DAG with edge u -> v; post(u) > post(v)
+    for vertex in range(number_vertices):
+        for neighbour in adj[vertex]:
+            if post[neighbour] >= post[vertex]:
+                return 1  # -> cycle detected
+    return 0  # no cycle detected
 
 
 def main():
     input_data = sys.stdin.readline().strip()
     # reads in the data as a single string separated with spaces
     # number vertices, number of edges, edge_1, edge_2, ... edge_n
-    # outputs number of connected components
+    # outputs whether it is a DAG (return 0) or not a DAG (return 1)
     data = list(map(int, input_data.split()))
     n, m = data[0:2]
     data = data[2:]
@@ -35,8 +55,7 @@ def main():
     adj = [[] for _ in range(n)]
     for (a, b) in edges:
         adj[a - 1].append(b - 1)
-        adj[b - 1].append(a - 1)
-    print(number_of_components(adj))
+    print(acyclic2(adj))
 
 
 if __name__ == '__main__':
