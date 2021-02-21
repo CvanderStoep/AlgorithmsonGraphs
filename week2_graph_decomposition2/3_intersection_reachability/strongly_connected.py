@@ -47,31 +47,28 @@ def dfs(adj):
 
 
 def number_of_strongly_connected_components(adj):
+    result = 0  # this is the number of strongly connected components (SCC)
+    number_vertices = len(adj)
+    visited = [False] * number_vertices
+
     def explore(vertex):
         visited[vertex] = True
         for neighbour in adj[vertex]:
             if not visited[neighbour]:
                 explore(neighbour)
 
+    #  run DFS on the reverse Graph
     adjR = [[] for _ in range(n)]
     for vertex in range(n):
         for neighbour in adj[vertex]:
             adjR[neighbour].append(vertex)
-    # print(adj)
-    # print(adjR)
     order = dfs(adjR)
-    # print(order)
 
-    result = 0  # this is the number of strongly connected components (SCC)
-    number_vertices = len(adj)
-    visited = [False] * number_vertices
-
+    #  run DFS again on Graph in reverse postorder obtained from previous DFS(Graph Reverse)
     for v in order:
         if not visited[v]:
             explore(v)
-            # print(visited)
-            result += 1
-
+            result += 1  # adds one to the number of SCC
     return result
 
 
