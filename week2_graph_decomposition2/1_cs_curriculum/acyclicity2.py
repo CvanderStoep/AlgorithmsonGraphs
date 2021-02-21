@@ -1,5 +1,8 @@
 import sys
 
+"""checks a directed graph for cycles"""
+
+#TODO check for a way to remove these global variable clock
 global clock
 clock = 1
 
