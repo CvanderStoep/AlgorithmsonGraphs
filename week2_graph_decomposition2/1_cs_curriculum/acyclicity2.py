@@ -3,12 +3,14 @@ import sys
 """checks a directed graph for cycles"""
 
 # TODO check for a way to remove these global variable clock
+# why is this not necessary for the other variables like visited; pre ; post
+
 global clock
 clock = 1
 
 
 def acyclic2(adj):
-    """checks whether two vertices in a graph are connected"""
+    """checks whether the DAG contains cycles"""
 
     number_vertices = len(adj)
     visited = [False] * number_vertices
