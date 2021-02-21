@@ -54,6 +54,7 @@ if __name__ == '__main__':
     for (a, b) in edges:
         adj[a - 1].append(b - 1)
     order = dfs(adj)
+
     for x in order:
         print(x + 1, end=' ')
 
