@@ -2,12 +2,6 @@ import sys
 
 """checks a directed graph for cycles"""
 
-# TODO check for a way to remove these global variable clock
-# why is this not necessary for the other variables like visited; pre ; post
-
-global clock
-clock = 1
-
 
 def acyclic2(adj):
     """checks whether the DAG contains cycles"""
@@ -16,14 +10,15 @@ def acyclic2(adj):
     visited = [False] * number_vertices
     pre = [0] * number_vertices
     post = [0] * number_vertices
+    clock = 1
 
     def previsit(v):
-        global clock
+        nonlocal clock
         pre[v] = clock
         clock += 1
 
     def postvisit(v):
-        global clock
+        nonlocal clock
         post[v] = clock
         clock += 1
 
@@ -65,3 +60,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+# 4 4 1 2 4 1 2 3 3 1 -> 1 (cycle)
+# 5 7 1 2 2 3 1 3 3 4 1 4 2 5 3 5 -> 0 (no cycle)
