@@ -2,9 +2,6 @@
 
 import sys
 
-global clock
-clock = 1
-
 
 def dfs(adj):
     """return the post-order indices"""
@@ -13,14 +10,15 @@ def dfs(adj):
     visited = [False] * number_vertices
     pre = [0] * number_vertices
     post = [0] * number_vertices
+    clock = 1
 
     def previsit(v):
-        global clock
+        nonlocal clock
         pre[v] = clock
         clock += 1
 
     def postvisit(v):
-        global clock
+        nonlocal clock
         post[v] = clock
         clock += 1
 
